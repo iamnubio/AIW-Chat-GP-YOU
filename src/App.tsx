@@ -7,18 +7,18 @@ function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
-      <div className="h-screen flex flex-col">
-        <div className="p-4 bg-gray-950/90 backdrop-blur-sm border-b border-blue-900/50">
-          <TopMenu isOpen={isSidebarOpen} onToggle={() => setIsSidebarOpen(!isSidebarOpen)} />
-        </div>
-        
-        <div className="flex-1 overflow-hidden p-4">
-          <ChatWindow />
-        </div>
+    <div className="h-[100dvh] flex flex-col bg-gray-900 text-white overflow-hidden">
+      <header className="flex-none p-4 bg-gray-950/90 backdrop-blur-sm border-b border-blue-900/50">
+        <TopMenu isOpen={isSidebarOpen} onToggle={() => setIsSidebarOpen(!isSidebarOpen)} />
+      </header>
+      
+      <main className="flex-1 min-h-0 p-4 overflow-hidden">
+        <ChatWindow />
+      </main>
 
+      <footer className="flex-none bg-gray-950/90 backdrop-blur-md border-t border-blue-900 py-2 px-4">
         <BottomMenu />
-      </div>
+      </footer>
     </div>
   );
 }
