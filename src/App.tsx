@@ -10,12 +10,46 @@ import { Resources } from './pages/Resources';
 import { Settings } from './pages/Settings';
 import { Support } from './pages/Support';
 
+interface NavLinkProps {
+  to: string;
+  children: React.ReactNode;
+  className?: string;
+  icon?: React.ReactNode;
+}
+
+function NavLink({ to, children, className = '', icon }: NavLinkProps) {
+  const navigate = useNavigate();
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigate(to);
+    setIsMenuOpen(false);
+  };
+
+  return (
+    <a
+      href={to}
+      onClick={handleClick}
+      className={`block text-gray-300 hover:text-white transition-colors ${className}`}
+    >
+      {icon && <span className="mr-2">{icon}</span>}
+      {children}
+    </a>
+  );
+}
+
 function AppContent() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
-  const navigate = useNavigate();
-
   const isHome = location.pathname === '/';
+
+  const menuItems = [
+    { to: '/', label: 'Chat', icon: <MessageSquare className="w-5 h-5" />, primary: true },
+    { to: '/dashboard', label: 'Dashboard' },
+    { to: '/projects', label: 'Projects' },
+    { to: '/resources', label: 'Resources' },
+    { to: '/settings', label: 'Settings' },
+    { to: '/support', label: 'Support' }
+  ];
 
   return (
     <div className="flex flex-col h-screen bg-gradient-to-b from-gray-950 via-blue-950 to-gray-950 text-gray-100">
@@ -56,77 +90,26 @@ function AppContent() {
         </button>
 
         <nav className="space-y-4">
-          {/* Chat Link */}
-          <a 
-            href="/"
-            onClick={(e) => {
-              e.preventDefault();
-              navigate('/');
-              setIsMenuOpen(false);
-            }}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-900/30 rounded-lg border border-blue-800/50 text-white hover:bg-blue-800/40 transition-colors"
-          >
-            <MessageSquare className="w-5 h-5" />
-            <span>Chat</span>
-          </a>
-
-          <div className="pt-2">
-            <a 
-              href="/dashboard" 
-              onClick={(e) => {
-                e.preventDefault();
-                navigate('/dashboard');
-                setIsMenuOpen(false);
-              }}
-              className="block text-gray-300 hover:text-white transition-colors"
-            >
-              Dashboard
-            </a>
-            <a 
-              href="/projects"
-              onClick={(e) => {
-                e.preventDefault();
-                navigate('/projects');
-                setIsMenuOpen(false);
-              }}
-              className="block text-gray-300 hover:text-white transition-colors mt-4"
-            >
-              Projects
-            </a>
-            <a 
-              href="/resources"
-              onClick={(e) => {
-                e.preventDefault();
-                navigate('/resources');
-                setIsMenuOpen(false);
-              }}
-              className="block text-gray-300 hover:text-white transition-colors mt-4"
-            >
-              Resources
-            </a>
-            <a 
-              href="/settings"
-              onClick={(e) => {
-                e.preventDefault();
-                navigate('/settings');
-                setIsMenuOpen(false);
-              }}
-              className="block text-gray-300 hover:text-white transition-colors mt-4"
-            >
-              Settings
-            </a>
-            <a 
-              href="/support"
-              onClick={(e) => {
-                e.preventDefault();
-                navigate('/support');
-                setIsMenuOpen(false);
-              }}
-              className="block text-gray-300 hover:text-white transition-colors mt-4"
-            >
-              Support
-            </a>
-          </div>
+          {menuItems.map((item) => (
+            item.primary ? (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                className="flex items-center gap-2 px-4 py-2 bg-blue-900/30 rounded-lg border border-blue-800/50 text-white hover:bg-blue-800/40 transition-colors"
+                icon={item.icon}
+              >
+                {item.label}
+              </NavLink>
+            ) : (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                className="mt-4 first:mt-0"
+              >
+                {item.label}
+              </NavLink>
+            )
+          ))}
         </nav>
       </div>
 
