@@ -15,12 +15,10 @@ function AppContent() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const isHome = location.pathname === '/';
-
   return (
-    <div className="flex flex-col h-screen bg-gradient-to-b from-gray-950 via-blue-950 to-gray-950 text-gray-100">
+    <div className="flex flex-col h-screen bg-gradient-to-b from-[#085659] via-[#0c8388] to-[#085659] text-[#e6e6e6]">
       {/* Top Menu */}
-      <div className="bg-gray-950/90 backdrop-blur-md border-b border-blue-900/50">
+      <div className="bg-gray-950/90 backdrop-blur-md border-b border-[#0c8388]/50">
         <div className="max-w-4xl mx-auto px-3 py-2">
           <TopMenu isOpen={isMenuOpen} onToggle={() => setIsMenuOpen(!isMenuOpen)} />
         </div>
@@ -64,83 +62,41 @@ function AppContent() {
               navigate('/');
               setIsMenuOpen(false);
             }}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-900/30 rounded-lg border border-blue-800/50 text-white hover:bg-blue-800/40 transition-colors"
+            //className="flex items-center gap-2 px-4 py-2 bg-blue-900/30 rounded-lg border border-blue-800/50 text-white hover:bg-blue-800/40 transition-colors"
+            //className="flex items-center gap-2 px-4 py-2 bg-[#085659]/30 rounded-lg border border-[#0c8388]/50 text-[#e6e6e6] hover:bg-[#0c8388]/40 transition-colors">
+            className="flex items-center gap-2 px-4 py-2 bg-[#085659]/30 rounded-lg border border-[#0c8388]/50 text-[#e6e6e6] hover:bg-[#0c8388]/40 transition-colors">
+  <!-- Your content here -->
           >
             <MessageSquare className="w-5 h-5" />
             <span>Chat</span>
           </a>
 
-          <div className="pt-2">
-            <a 
-              href="/dashboard" 
-              onClick={(e) => {
-                e.preventDefault();
-                navigate('/dashboard');
-                setIsMenuOpen(false);
-              }}
-              className="block text-gray-300 hover:text-white transition-colors"
-            >
-              Dashboard
-            </a>
-            <a 
-              href="/projects"
-              onClick={(e) => {
-                e.preventDefault();
-                navigate('/projects');
-                setIsMenuOpen(false);
-              }}
-              className="block text-gray-300 hover:text-white transition-colors mt-4"
-            >
-              Projects
-            </a>
-            <a 
-              href="/resources"
-              onClick={(e) => {
-                e.preventDefault();
-                navigate('/resources');
-                setIsMenuOpen(false);
-              }}
-              className="block text-gray-300 hover:text-white transition-colors mt-4"
-            >
-              Resources
-            </a>
-            <a 
-              href="/settings"
-              onClick={(e) => {
-                e.preventDefault();
-                navigate('/settings');
-                setIsMenuOpen(false);
-              }}
-              className="block text-gray-300 hover:text-white transition-colors mt-4"
-            >
-              Settings
-            </a>
-            <a 
-              href="/support"
-              onClick={(e) => {
-                e.preventDefault();
-                navigate('/support');
-                setIsMenuOpen(false);
-              }}
-              className="block text-gray-300 hover:text-white transition-colors mt-4"
-            >
-              Support
-            </a>
+          <div className="pt-2 space-y-4">
+            {['dashboard', 'projects', 'resources', 'settings', 'support'].map((path) => (
+              <a 
+                key={path}
+                href={`/${path}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate(`/${path}`);
+                  setIsMenuOpen(false);
+                }}
+                className="block text-gray-300 hover:text-white transition-colors"
+              >
+                {path.charAt(0).toUpperCase() + path.slice(1)}
+              </a>
+            ))}
           </div>
         </nav>
       </div>
-
-      {isHome && <BottomMenu />}
     </div>
   );
 }
 
-function App() {
+export function App() {
   return (
     <Router>
       <AppContent />
     </Router>
   );
 }
-
-export default App;
