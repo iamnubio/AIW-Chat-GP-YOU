@@ -10,7 +10,7 @@ interface Message {
 function formatAIResponse(text: string): string {
   text = text.replace(/\*\*(.*?)\*\*/g, (_, content) => content);
   text = text.replace(/(\d+\.)/g, '\n$1');
-  text = text.replace(/([•])/g, '\n$1');
+  text = text.replace(/([\u2022])/g, '\n$1');
   text = text.replace(/\n{3,}/g, '\n\n');
   return text.trim();
 }
@@ -18,10 +18,10 @@ function formatAIResponse(text: string): string {
 function ThinkingIndicator() {
   return (
     <div className="flex justify-start">
-      <div className="max-w-[80%] rounded-2xl px-4 py-2 bg-gray-900 rounded-tl-sm">
+      <div className="max-w-[80%] rounded-2xl px-4 py-2 bg-teal-900 rounded-tl-sm">
         <div className="flex items-center gap-2 mb-1">
-          <Bot className="w-4 h-4" />
-          <span className="text-sm font-medium text-blue-300">BOOGIE-Ai</span>
+          <Bot className="w-4 h-4 text-teal-600" />
+          <span className="text-sm font-medium text-gray-400">BOOGIE-Ai</span>
         </div>
         <div className="flex items-center gap-2 text-gray-400">
           <span>Thinking</span>
@@ -60,10 +60,12 @@ export function ChatWindow() {
           setMessages([{ content: response, isBot: true }]);
         } catch (error) {
           console.error('Error initializing chat:', error);
-          setMessages([{
-            content: "Hello! I'm BOOGIE AI. How can I help you today?",
-            isBot: true,
-          }]);
+          setMessages([
+            {
+              content: "Hello! I'm BOOGIE AI. How can I help you today?",
+              isBot: true,
+            },
+          ]);
         } finally {
           setIsLoading(false);
         }
@@ -101,64 +103,27 @@ export function ChatWindow() {
   };
 
   return (
-    <div className="h-full flex flex-col bg-gray-950/50 rounded-lg backdrop-blur-sm border border-blue-900/50 shadow-xl relative">
-      <div className="absolute -inset-[1px] bg-gradient-to-r from-blue-900/20 via-blue-800/20 to-blue-900/20 rounded-lg blur-sm -z-10"></div>
-      <div className="absolute -inset-[1px] bg-gradient-to-r from-blue-800/10 via-blue-700/10 to-blue-800/10 rounded-lg blur-md -z-20"></div>
+    <div className="h-full flex flex-col bg-teal-900/50 rounded-lg backdrop-blur-sm border border-teal-600/50 shadow-xl relative">
+      <div className="absolute -inset-[1px] bg-gradient-to-r from-teal-600/20 via-teal-900/20 to-teal-600/20 rounded-lg blur-sm -z-10"></div>
+      <div className="absolute -inset-[1px] bg-gradient-to-r from-teal-900/10 via-teal-600/10 to-teal-900/10 rounded-lg blur-md -z-20"></div>
 
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.map((message, index) => (
-          <div
-            key={index}
-            className={`flex ${message.isBot ? 'justify-start' : 'justify-end'}`}
-          >
-            <div
-              className={`max-w-[80%] rounded-2xl px-4 py-2 ${
-                message.isBot
-                  ? 'bg-gray-900 rounded-tl-sm'
-                  : 'bg-blue-900 rounded-tr-sm'
-              }`}
-            >
+          <div key={index} className={`flex ${message.isBot ? 'justify-start' : 'justify-end'}`}>
+            <div className={`max-w-[80%] rounded-2xl px-4 py-2 ${message.isBot ? 'bg-teal-900 rounded-tl-sm' : 'bg-teal-600 rounded-tr-sm'}`}>
               {message.isBot && (
                 <div className="flex items-center gap-2 mb-1">
-                  <Bot className="w-4 h-4" />
-                  <span className="text-sm font-medium text-blue-300">BOOGIE-Ai</span>
+                  <Bot className="w-4 h-4 text-teal-600" />
+                  <span className="text-sm font-medium text-gray-400">BOOGIE-Ai</span>
                 </div>
               )}
-              <p className="text-gray-100 whitespace-pre-line">{message.content}</p>
+              <p className="text-gray-200 whitespace-pre-line">{message.content}</p>
             </div>
           </div>
         ))}
         {isLoading && <ThinkingIndicator />}
         <div ref={messagesEndRef} />
       </div>
-
-      <form
-        onSubmit={handleSubmit}
-        className="border-t border-blue-900/50 p-4 bg-gray-950/30"
-      >
-        <div className="flex gap-4">
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask about AI, machine learning, or data science..."
-            className="flex-1 bg-gray-900 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 border border-blue-900"
-            disabled={isLoading}
-          />
-          <button
-            type="submit"
-            className={`bg-blue-900 text-white rounded-lg px-4 py-2 transition-colors duration-200 flex items-center gap-2 ${
-              isLoading 
-                ? 'opacity-50 cursor-not-allowed'
-                : 'hover:bg-blue-800'
-            }`}
-            disabled={isLoading}
-          >
-            <Send className="w-4 h-4" />
-            <span className="hidden sm:inline">{isLoading ? 'Sending...' : 'Send'}</span>
-          </button>
-        </div>
-      </form>
     </div>
   );
 }
