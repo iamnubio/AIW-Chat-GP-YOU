@@ -23,7 +23,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
         onClick={onClose}
         className={`fixed top-[50%] -translate-y-1/2 z-[1000] transition-all duration-300 ${
           isOpen ? 'right-[250px]' : 'right-0'
-        } bg-gray-950 p-2 rounded-l-lg border-l border-y border-blue-900/50`}
+        } bg-gray-950 p-2 rounded-l-lg border-l border-y border-teal-900/50`}
       >
         <ChevronRight className={`w-5 h-5 text-gray-300 transition-transform duration-300 ${
           !isOpen ? 'rotate-180' : ''
@@ -32,7 +32,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
 
       {/* Sidebar */}
       <div
-        className={`fixed top-[73px] right-0 h-[calc(100dvh-73px)] bg-gray-950/95 backdrop-blur-sm border-l border-blue-900/50 transition-transform duration-300 ease-in-out z-[999] ${
+        className={`fixed top-[73px] right-0 h-[calc(100dvh-73px)] bg-gray-950/95 backdrop-blur-sm border-l border-teal-900/50 transition-transform duration-300 ease-in-out z-[999] ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
         style={{ width: '250px' }}

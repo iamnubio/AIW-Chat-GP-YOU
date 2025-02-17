@@ -13,7 +13,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
-      <header className="fixed top-0 left-0 right-0 z-50 bg-gray-950/95 backdrop-blur-sm border-b border-blue-900/50">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-gray-950/95 backdrop-blur-sm border-b border-teal-900/50">
         <TopMenu isOpen={isSidebarOpen} onToggle={toggleSidebar} />
       </header>
 
@@ -25,7 +25,7 @@ function App() {
         </div>
       </main>
 
-      <footer className="fixed bottom-0 left-0 right-0 z-50 bg-gray-950/95 backdrop-blur-sm border-t border-blue-900/50">
+      <footer className="fixed bottom-0 left-0 right-0 z-50 bg-gray-950/95 backdrop-blur-sm border-t border-teal-900/50">
         <BottomMenu />
       </footer>
 
